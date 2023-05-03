@@ -1,5 +1,5 @@
-const Query = "SELECT * FROM hospitales ORDER BY hospitalid ASC"
+const AllHospitales = "SELECT * FROM hospitales ORDER BY hospitalid"
 
 module.exports = {
-    Query,
+    AllHospitales,
 }

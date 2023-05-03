@@ -3,6 +3,6 @@ const controller = require('./controller')
 
 const router = Router()
 
-router.get("/", controller.AllHospitales)
+router.get("/", controller.AllRequests)
 
 module.exports = router

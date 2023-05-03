@@ -6,13 +6,13 @@ const { parse } = require('path')
 const { NOMEM } = require('dns')
 
 
-const AllHospitales = (req, res) => {
-    pool.query(queries.AllHospitales, (error, results) => {
+const AllReviews = (req, res) => {
+    pool.query(queries.AllReviews, (error, results) => {
         if (error) throw error
         res.status(200).json(results.rows)
     })
 }
 
 module.exports = {
-    AllHospitales,
+    AllReviews,
 }
