@@ -17,12 +17,19 @@ const ValidateUser = (req, res) => {
     const correo = req.params.correo
     const password = req.params.password
 
-    pool.query(queries.ValidateUser, [correo, password], (error, results) => {
+    pool.query(queries.ValidateEmail, [correo], (error, results) => {
+        
         if (error) throw error
-        if (results.rowCount == 0)
-            res.send(false)
+        if (results.rowCount != 0)
+            pool.query(queries.ValidateUser, [correo, password], (error, results) => {
+                if (error) throw error
+                if (results.rowCount == 0)
+                    res.send(['La contraseña ingresada es incorrecta'])
+                else
+                    res.send(true)
+            })
         else
-            res.send(true)
+            res.send(['El correo ingresado no existe'])
     })
 }
 
@@ -30,9 +37,16 @@ const AddUser = (req, res) => {
     const correo = req.params.correo
     const password = String(req.params.password)
 
-    pool.query(queries.AddUser, [correo, password], (error, results) => {
+    pool.query(queries.ValidateEmail, [correo], (error, results) => {
+        
         if (error) throw error
-        res.send(true)
+        if (results.rowCount == 0)
+            pool.query(queries.AddUser, [correo, password], (error, results) => {
+                if (error) throw error
+                res.send(true)
+            })
+        else
+            res.send(['El correo ingresado ya existe'])
     })
 }
 
