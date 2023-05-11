@@ -3,6 +3,9 @@ const controller = require('./controller')
 
 const router = Router()
 
-router.get("/", controller.AutenticateUser)
+router.get("/", controller.AllUsers)
+router.get("/validateUser/:correo&:password", controller.ValidateUser)
+
+router.post("/addUser/:correo&:password", controller.AddUser)
 
 module.exports = router

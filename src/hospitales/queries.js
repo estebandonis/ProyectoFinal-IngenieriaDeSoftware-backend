@@ -1,4 +1,4 @@
-const AllHospitales = "SELECT * FROM hospitales ORDER BY hospitalid"
+const AllHospitales = "SELECT * FROM hospitales WHERE estado='aprobado' ORDER BY hospitalid"
 
 module.exports = {
     AllHospitales,
