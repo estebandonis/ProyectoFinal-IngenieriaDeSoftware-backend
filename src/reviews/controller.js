@@ -13,6 +13,16 @@ const AllReviews = (req, res) => {
     })
 }
 
+const HospitalReviews = (req, res) => {
+    const { id } = req.params
+
+    pool.query(queries.HospitalReviews, [id], (error, results) => {
+        if (error) throw error
+        res.status(200).json(results.rows)
+    })
+}
+
 module.exports = {
     AllReviews,
+    HospitalReviews,
 }
