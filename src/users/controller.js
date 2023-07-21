@@ -4,6 +4,7 @@ const queries = require('./queries')
 const { response } = require('express')
 const { parse } = require('path')
 const { NOMEM } = require('dns')
+const { password } = require('pg/lib/defaults')
 
 
 const AllUsers = (req, res) => {
@@ -33,6 +34,25 @@ const ValidateUser = (req, res) => {
     })
 }
 
+const UpdateUserPassword = (req, res) => {
+    const correo = req.params.correo
+    const old_password = String(req.params.old_password)
+    const new_password = String(req.params.new_password)
+
+    pool.query(queries.ValidateUser, [correo, old_password], (error, results) => {
+
+        if (error) throw error
+        if (results.rowCount != 0)
+            pool.query(queries.UpdateUserPassword, [correo, old_password, new_password], (error, results) => {
+                if (error) throw error
+                if (results.rowCount != 0)
+                    res.send(true)
+            })
+        else
+            res.send(['La contraseña ingresada es incorrecta'])
+    })
+}
+
 const AddUser = (req, res) => {
     const correo = req.params.correo
     const password = String(req.params.password)
@@ -53,5 +73,6 @@ const AddUser = (req, res) => {
 module.exports = {
     AllUsers,
     ValidateUser,
+    UpdateUserPassword,
     AddUser,
 }

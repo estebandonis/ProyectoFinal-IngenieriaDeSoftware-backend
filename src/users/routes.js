@@ -8,4 +8,6 @@ router.get("/validateUser/:correo&:password", controller.ValidateUser)
 
 router.post("/addUser/:correo&:password", controller.AddUser)
 
+router.put("/updateUserPassword/:correo&:old_password&:new_password", controller.UpdateUserPassword)
+
 module.exports = router
