@@ -13,6 +13,24 @@ const AllHospitales = (req, res) => {
     })
 }
 
+const InsertHospital = (req, res) => {
+    const name = req.params.name
+    const descrip = req.params.descrip
+    const direc = req.params.direc
+    const zona = req.params.zona
+    const correo = req.params.correo
+  
+    pool.query(queries.InsertHospital, [name, direc, descrip, zona, correo], (error, results) => {
+      if (error) {
+        console.error('Error al insertar el hospital', error);
+        res.send(false);
+      } else {
+        res.send(true);
+      }
+    });
+  };
+
 module.exports = {
     AllHospitales,
+    InsertHospital,
 }
