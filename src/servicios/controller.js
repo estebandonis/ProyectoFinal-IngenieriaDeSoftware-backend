@@ -22,7 +22,17 @@ const HospitalServices = (req, res) => {
     })
 }
 
+const AddServicio = (req, res) => {
+    const { examen, precio, hospital } = req.params
+
+    pool.query(queries.AddServicio, [examen, precio, hospital], (error, results) => {
+        if (error) throw error
+        res.status(200).json(results.rows)
+    })
+}
+
 module.exports = {
     AllServicios,
     HospitalServices,
+    AddServicio,
 }
