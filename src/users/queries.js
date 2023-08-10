@@ -2,8 +2,9 @@ const AllUsers = "SELECT correo FROM users ORDER BY user_id"
 const ValidateUser = "SELECT user_id FROM users WHERE correo = $1 AND password = $2"
 const ValidateEmail = "SELECT user_id FROM users WHERE correo = $1"
 const UpdateUserPassword = "UPDATE users SET password = $3 WHERE correo = $1 AND password = $2"
-const AddUser = "INSERT INTO users (correo, password, tipo, estado) VALUES ($1, $2, 'reviewer', 'activo')"
-const AddDPI = "UPDATE users SET dpi = $1 WHERE correo = $2"
+const AddUser = "INSERT INTO users (correo, password, tipo, dpi, estado) VALUES ($1, $2, 'reviewer', '0', 'activo')"
+const AddDPI = "UPDATE users SET dpi = $1 AND tipo = 'manager' WHERE correo = $2"
+const getDPI = "SELECT dpi FROM users WHERE correo = $1"
 
 module.exports = {
     AllUsers,
@@ -12,4 +13,5 @@ module.exports = {
     UpdateUserPassword,
     AddUser,
     AddDPI,
+    getDPI,
 }

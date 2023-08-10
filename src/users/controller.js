@@ -87,10 +87,27 @@ const AddDPI = (req, res) => {
     })
 }
 
+const getDPI = (req, res) => {
+    const { correo } = req.params
+
+    pool.query(queries.ValidateEmail, [correo], (error, results) => {
+        
+        if (error) throw error
+        if (results.rowCount != 0)
+            pool.query(queries.getDPI, [correo], (error, results) => {
+                if (error) throw error
+                res.send(results.rows[0].dpi)
+            })
+        else
+            res.send(['El correo ingresado no existe'])
+    })
+}
+
 module.exports = {
     AllUsers,
     ValidateUser,
     UpdateUserPassword,
     AddUser,
     AddDPI,
+    getDPI,
 }
