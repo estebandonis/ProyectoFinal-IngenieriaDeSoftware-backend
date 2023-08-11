@@ -80,7 +80,8 @@ const AddDPI = (req, res) => {
         if (results.rowCount != 0)
             pool.query(queries.AddDPI, [dpi, correo], (error, results) => {
                 if (error) throw error
-                res.send(true)
+                else
+                    res.send(true)
             })
         else
             res.send(['El correo ingresado no existe'])
