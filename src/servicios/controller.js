@@ -9,7 +9,8 @@ const { NOMEM } = require('dns')
 const AllServicios = (req, res) => {
     pool.query(queries.AllServicios, (error, results) => {
         if (error) throw error
-        res.status(200).json(results.rows)
+        else
+            res.status(200).json(results.rows)
     })
 }
 
@@ -18,7 +19,8 @@ const HospitalServices = (req, res) => {
 
     pool.query(queries.HospitalServices, [id], (error, results) => {
         if (error) throw error
-        res.status(200).json(results.rows)
+        else
+            res.status(200).json(results.rows)
     })
 }
 
@@ -27,7 +29,8 @@ const AddServicio = (req, res) => {
 
     pool.query(queries.AddServicio, [examen, precio, hospital], (error, results) => {
         if (error) throw error
-        res.status(200).json(results.rows)
+        else
+            res.status(200).json(results.rows)
     })
 }
 

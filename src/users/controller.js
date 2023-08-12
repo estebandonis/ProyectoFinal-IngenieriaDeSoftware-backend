@@ -10,7 +10,8 @@ const { password } = require('pg/lib/defaults')
 const AllUsers = (req, res) => {
     pool.query(queries.AllUsers, (error, results) => {
         if (error) throw error
-        res.status(200).json(results.rows)
+        else 
+            res.status(200).json(results.rows)
     })
 }
 
@@ -63,7 +64,8 @@ const AddUser = (req, res) => {
         if (results.rowCount == 0)
             pool.query(queries.AddUser, [correo, password], (error, results) => {
                 if (error) throw error
-                res.send(true)
+                else
+                    res.send(true)
             })
         else
             res.send(['El correo ingresado ya existe'])
@@ -97,7 +99,8 @@ const getDPI = (req, res) => {
         if (results.rowCount != 0)
             pool.query(queries.getDPI, [correo], (error, results) => {
                 if (error) throw error
-                res.send(results.rows[0].dpi)
+                else
+                    res.send(results.rows[0].dpi)
             })
         else
             res.send(['El correo ingresado no existe'])
