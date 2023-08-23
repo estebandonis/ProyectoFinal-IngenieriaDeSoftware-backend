@@ -14,6 +14,28 @@ const AllHospitales = (req, res) => {
     })
 }
 
+const AllHospitalesEstados = (req, res) => {
+    pool.query(queries.AllHospitalesEstados, (error, results) => {
+      if (error) throw error
+      else 
+         res.status(200).json(results.rows)
+  });
+};
+
+const UpdateHospitalEstado = (req, res) => {
+  const hospitalId = req.params.hospitalId;
+  const newEstado = req.params.newEstado;
+
+  pool.query(queries.UpdateHospitalEstado, [newEstado, hospitalId], (error, results) => {
+      if (error) {
+          console.error('Error al actualizar el estado del hospital', error);
+          res.send(false);
+      } else {
+          res.send(true);
+      }
+  });
+};
+
 const InsertHospital = (req, res) => {
     const name = req.params.name
     const descrip = req.params.descrip
@@ -33,5 +55,8 @@ const InsertHospital = (req, res) => {
 
 module.exports = {
     AllHospitales,
+    AllHospitalesEstados,
+    UpdateHospitalEstado,
     InsertHospital,
+    
 }
