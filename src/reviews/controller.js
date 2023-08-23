@@ -24,7 +24,21 @@ const HospitalReviews = (req, res) => {
     })
 }
 
+const AddUserReview = (req, res) => {
+    const rating = parseFloat(req.params.rating).toFixed(1)
+    const comentario = req.params.comentario
+    const correo = req.params.correo
+    const hospital_id = parseInt(req.params.id)
+
+    pool.query(queries.AddUserReview, [rating, comentario, correo, hospital_id], (error, results) => {
+        if (error) throw error
+        else
+            res.send(true)
+    })
+}
+
 module.exports = {
     AllReviews,
     HospitalReviews,
+    AddUserReview,
 }
