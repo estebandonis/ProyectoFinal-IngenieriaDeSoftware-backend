@@ -28,3 +28,4 @@ app.use('/api/v1/servicios', serviciosRoutes)
 
 app.listen(port, () => console.log(`app listening on port ${port}`));
 
+module.exports = app; // Exporta la instancia de la aplicación
