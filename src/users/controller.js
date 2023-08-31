@@ -126,6 +126,23 @@ const ifAdmin = (req, res) => {
     })
 }
 
+const getTipo = (req, res) => {
+    const { correo } = req.params
+
+    pool.query(queries.ValidateEmail, [correo], (error, results) => {
+
+        if (error) throw error
+        if (results.rowCount != 0)
+            pool.query(queries.getTipo, [correo], (error, results) => {
+                if (error) throw error
+                else
+                    res.status(200).json(results.rows)
+            })
+        else
+            res.send(['El correo ingresado no existe'])
+    })
+}
+
 module.exports = {
     AllUsers,
     ValidateUser,
@@ -133,5 +150,6 @@ module.exports = {
     AddUser,
     AddDPI,
     getDPI,
+    getTipo,
     ifAdmin,
 }
