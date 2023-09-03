@@ -4,6 +4,8 @@ const UpdateHospitalName = "UPDATE hospitales SET nombre = $2 WHERE hospital_id 
 const UpdateHospitalDirection = "UPDATE hospitales SET direccion = $2 WHERE hospital_id = $1"
 const UpdateHospitalDescription = "UPDATE hospitales SET descripcion = $2 WHERE hospital_id = $1"
 const UpdateHospitalZone = "UPDATE hospitales SET zona = $2 WHERE hospital_id = $1"
+const AllHospitalesEstados = "SELECT * FROM hospitales ORDER BY hospital_id";
+const UpdateHospitalEstado = "UPDATE hospitales SET estado = $1 WHERE hospital_id = $2";
 
 module.exports = {
   AllHospitales,
@@ -12,4 +14,6 @@ module.exports = {
   UpdateHospitalDirection,
   UpdateHospitalDescription,
   UpdateHospitalZone,
+  UpdateHospitalEstado,
+  AllHospitalesEstados,
 };
