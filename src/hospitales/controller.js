@@ -22,6 +22,18 @@ const AllHospitalesEstados = (req, res) => {
   });
 };
 
+const AllHospitalsByManager = (req, res) => {
+  const userId = req.params.user_id;
+
+  pool.query(queries.AllHospitalesByManager, [userId], (error, results) => {
+      if (error) throw error
+        else {
+        res.status(200).json(results.rows);
+      }
+  });
+};
+
+
 const UpdateHospitalEstado = (req, res) => {
   const hospitalId = req.params.hospitalId;
   const newEstado = req.params.newEstado;
@@ -72,6 +84,7 @@ const UpdateHospitalInfo = (req, res) => {
 
 module.exports = {
     AllHospitales,
+    AllHospitalsByManager,
     AllHospitalesEstados,
     UpdateHospitalEstado,
     InsertHospital,

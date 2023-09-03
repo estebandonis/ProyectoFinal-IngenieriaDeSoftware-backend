@@ -4,6 +4,7 @@ const controller = require('./controller');
 const router = Router();
 
 router.get("/", controller.AllHospitales);
+router.get("/hospitalsByManager/:user_id", controller.AllHospitalsByManager)
 router.post("/addHospital/:name&:direc&:descrip&:zona&:correo", controller.InsertHospital);
 router.get("/estados", controller.AllHospitalesEstados);
 router.put("/updateEstado/:hospitalId/:newEstado", controller.UpdateHospitalEstado);
