@@ -7,11 +7,6 @@ router.get("/", controller.AllHospitales);
 router.post("/addHospital/:name&:direc&:descrip&:zona&:correo", controller.InsertHospital);
 router.get("/estados", controller.AllHospitalesEstados);
 router.put("/updateEstado/:hospitalId/:newEstado", controller.UpdateHospitalEstado);
-
-
-router.put("/updateHospitalName/:id&:name", controller.UpdateHospitalName);
-router.put("/updateHospitalDirection/:id&:direction", controller.UpdateHospitalDirection);
-router.put("/updateHospitalDescription/:id&:description", controller.UpdateHospitalDescription);
-router.put("/updateHospitalZone/:id&:zone", controller.UpdateHospitalZone);
+router.put("/updateHospitalInfo/:id&:name&:direction&:description&:zone", controller.UpdateHospitalInfo);
 
 module.exports = router;
