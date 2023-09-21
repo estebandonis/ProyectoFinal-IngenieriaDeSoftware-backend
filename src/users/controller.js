@@ -132,7 +132,7 @@ const getTipo = (req, res) => {
     pool.query(queries.ValidateEmail, [correo], (error, results) => {
 
         if (error) throw error
-        if (results.rowCount != 0)
+        if (results.rowCount !== 0)
             pool.query(queries.getTipo, [correo], (error, results) => {
                 if (error) throw error
                 else

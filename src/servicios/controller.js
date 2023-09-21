@@ -19,8 +19,10 @@ const HospitalServices = (req, res) => {
 
     pool.query(queries.HospitalServices, [id], (error, results) => {
         if (error) throw error
-        else
+        if (results.rowCount > 0)
             res.status(200).json(results.rows)
+        else
+            res.send(false)
     })
 }
 
