@@ -43,10 +43,10 @@ const UpdateUserPassword = (req, res) => {
     pool.query(queries.ValidateUser, [correo, old_password], (error, results) => {
 
         if (error) throw error
-        if (results.rowCount != 0)
+        if (results.rowCount !== 0)
             pool.query(queries.UpdateUserPassword, [correo, old_password, new_password], (error, results) => {
                 if (error) throw error
-                if (results.rowCount != 0)
+                if (results.rowCount !== 0)
                     res.send(true)
             })
         else
@@ -143,6 +143,16 @@ const getTipo = (req, res) => {
     })
 }
 
+const changeEstado = (req, res) => {
+    const { id, estado } = req.params
+
+    pool.query(queries.changeEstado, [estado, id], (error, results) => {
+        if (error) throw error
+        if (results.rowCount !== 0)
+            res.send(true)
+    })
+}
+
 module.exports = {
     AllUsers,
     ValidateUser,
@@ -152,4 +162,5 @@ module.exports = {
     getDPI,
     getTipo,
     ifAdmin,
+    changeEstado
 }

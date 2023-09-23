@@ -13,5 +13,6 @@ router.post("/addUser/:correo&:password", controller.AddUser)
 
 router.put("/updateUserPassword/:correo&:old_password&:new_password", controller.UpdateUserPassword)
 router.put("/addDPI/:dpi&:correo", controller.AddDPI)
+router.put("/changeEstado/:id&:estado", controller.changeEstado)
 
 module.exports = router
