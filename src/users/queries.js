@@ -5,7 +5,7 @@ const UpdateUserPassword = "UPDATE users SET password = $3 WHERE correo = $1 AND
 const AddUser = "INSERT INTO users (correo, password, tipo, dpi, estado) VALUES ($1, $2, 'reviewer', '0', 'activo')"
 const AddDPI = "UPDATE users SET dpi = $1, tipo = 'manager' WHERE correo = $2"
 const getDPI = "SELECT dpi FROM users WHERE correo = $1"
-const getTipo = "SELECT user_id, tipo FROM users WHERE correo = $1"
+const getTipo = "SELECT user_id, tipo, estado FROM users WHERE correo = $1"
 const changeEstado = "UPDATE users SET estado = $1 WHERE user_id = $2"
 
 module.exports = {
