@@ -53,7 +53,7 @@ describe('Test Funcionales backend', () => {
       const hospitalId = 1; // Reemplaza con el ID válido de un hospital existente
 
       request(app)
-        .put(`/api/v1/hospitales/updateEstado/${hospitalId}/aprobado`)
+        .put(`/api/v1/hospitales/updateEstado/${hospitalId}&aprobado`)
         .expect(200)
         .end((err, res) => {
           if (err) return done(err);
