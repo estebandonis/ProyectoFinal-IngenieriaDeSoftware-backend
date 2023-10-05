@@ -29,8 +29,14 @@ jobs:
     - name: Run tests with timeout
       run: |
         npm test &
-        sleep 15 # Tiempo máximo para ejecución (en segundos)
+        sleep 15 # Tiempo máximo para ejecución de las pruebas (en segundos)
         pkill -f "npm test" || true
-    - run: node server.js
+    - name: Start Node.js server
+      run: node server.js &
+    - name: Wait for 15 seconds for the server to run
+      run: sleep 15
+    - name: Stop Node.js server
+      run: pkill -f "node server.js" || true
       continue-on-error: true
+
      
