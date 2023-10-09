@@ -1,17 +1,19 @@
-const { error } = require('console')
-const pool = require('../../db')
-const queries = require('./queries')
-const { response } = require('express')
-const { parse } = require('path')
-const { NOMEM } = require('dns')
+const { PrismaClient } = require('@prisma/client')
+
+const prisma = new PrismaClient()
 
 
-const AllRequests = (req, res) => {
-    pool.query(queries.AllRequests, (error, results) => {
-        if (error) throw error
-        else
-            res.status(200).json(results.rows)
-    })
+const AllRequests = async (req, res) => {
+    try {
+        const AllRequests = await prisma.requests.findMany({
+            orderBy: {
+                request_id: 'asc'
+            }
+        })
+        res.status(200).json(AllRequests)   
+    } catch (error) {
+        res.status(500).send(["Error al obtener las solicitudes"])
+    }
 }
 
 module.exports = {

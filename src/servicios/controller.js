@@ -1,39 +1,75 @@
-const { error } = require('console')
-const pool = require('../../db')
-const queries = require('./queries')
-const { response } = require('express')
-const { parse } = require('path')
-const { NOMEM } = require('dns')
+const { PrismaClient } = require('@prisma/client')
+
+const prisma = new PrismaClient()
 
 
-const AllServicios = (req, res) => {
-    pool.query(queries.AllServicios, (error, results) => {
-        if (error) throw error
-        else
-            res.status(200).json(results.rows)
-    })
+const AllServicios = async (req, res) => {
+    try {
+        const AllServicios = await prisma.servicios.findMany({
+            orderBy: {
+                servicio_id: 'asc'
+            }
+        })
+        res.status(200).json(AllServicios)
+    } catch (error) {
+        res.status(400).send(["Error al obtener los servicios"])
+    }
 }
 
-const HospitalServices = (req, res) => {
+const HospitalServices = async (req, res) => {
     const { id } = req.params
 
-    pool.query(queries.HospitalServices, [id], (error, results) => {
-        if (error) throw error
-        if (results.rowCount > 0)
-            res.status(200).json(results.rows)
-        else
-            res.send(false)
-    })
+    try {
+        const HospitalServices = await prisma.servicios.findMany({
+            select: {
+                examenes: {
+                    select: {
+                        nombre: true
+                    }
+                },
+                precio: true
+            },
+            where: {
+                hospital_id: Number(id)
+            },
+            orderBy: {
+                examen_id: 'asc'
+            }
+        })   
+        res.status(200).send(HospitalServices)
+    } catch (error) {
+        res.status(400).send(["Error al obtener los servicios"])
+    }
 }
 
-const AddServicio = (req, res) => {
-    const { examen, precio, hospital } = req.params
+const AddServicio = async (req, res) => {
+    const { examen, hospital, precio } = req.params
 
-    pool.query(queries.AddServicio, [examen, precio, hospital], (error, results) => {
-        if (error) throw error
-        else
-            res.status(200).json(results.rows)
-    })
+    try {
+        const hospitalOb = await prisma.hospitales.findUnique({
+            where: {
+                nombre: hospital
+            }
+        })
+
+        const examenOb = await prisma.examenes.findUnique({
+            where: {
+                nombre: examen
+            }
+        })
+
+        const AddServicio = await prisma.servicios.create({
+            data: {
+                examen_id: Number(examenOb.examen_id),
+                hospital_id: Number(hospitalOb.hospital_id),
+                precio: String(precio)
+            }
+        })
+
+        res.status(200).send()
+    } catch (error) {
+        res.status(400).send([error.message])
+    }
 }
 
 module.exports = {

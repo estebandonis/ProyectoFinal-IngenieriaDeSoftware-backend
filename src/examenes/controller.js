@@ -1,25 +1,35 @@
-const { error } = require('console')
-const pool = require('../../db')
-const queries = require('./queries')
-const { response } = require('express')
-const { parse } = require('path')
-const { NOMEM } = require('dns')
+const { PrismaClient } = require('@prisma/client')
+
+const prisma = new PrismaClient()
 
 
-const AllExamenes = (req, res) => {
-    pool.query(queries.AllExamenes, (error, results) => {
-        if (error) throw error
-        else
-            res.status(200).json(results.rows)
-    })
+const AllExamenes = async (req, res) => {
+    try {
+        const examenes = await prisma.examenes.findMany({
+            orderBy: {
+                examen_id: 'asc'
+            }
+        })
+        res.status(200).json(examenes)   
+    } catch (error) {
+        res.status(500).send(["Error al obtener los examenes"])
+    }
 }
 
-const AllExamenesNames = (req, res) => {
-    pool.query(queries.AllExamenesNames, (error, results) => {
-        if (error) throw error
-        else
-            res.status(200).json(results.rows)
-    })
+const AllExamenesNames = async (req, res) => {
+    try {
+        const examenes = await prisma.examenes.findMany({
+            select: {
+                nombre: true
+            },
+            orderBy: {
+                examen_id: 'asc'
+            }
+        })
+        res.status(200).json(examenes)
+    } catch (error) {
+        res.status(500).send(["Error al obtener los examenes"])
+    }
 }
 
 module.exports = {
