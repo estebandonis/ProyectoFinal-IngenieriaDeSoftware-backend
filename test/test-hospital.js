@@ -1,6 +1,7 @@
 const assert = require('assert');
 const request = require('supertest');
 const app = require('../server'); // Asegúrate de que la ruta al archivo server.js es correcta
+var random = require('random-name')
 
 describe('Test Funcionales backend', () => {
     it('Test 1: Devolver un array de hospitales aprobados', (done) => {
@@ -18,7 +19,7 @@ describe('Test Funcionales backend', () => {
  
     it('Test 2: Agregar un nuevo hospital', (done) => {
       const newHospital = {
-        name: 'Donis',
+        name: random.place(),
         direc: '123 mixco',
         descrip: 'hola a todos',
         zona: '7',
