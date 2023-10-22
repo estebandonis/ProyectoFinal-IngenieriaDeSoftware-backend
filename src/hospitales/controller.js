@@ -1,7 +1,6 @@
 const { PrismaClient } = require('@prisma/client')
-
+const { cloudinary } = require('../../utils/cloudinary')
 const prisma = new PrismaClient()
-
 
 const AllHospitales = async (req, res) => {
   try {
@@ -77,8 +76,14 @@ const UpdateHospitalEstado = async (req, res) => {
 
 const InsertHospital = async (req, res) => {
   const { name, direc, descrip, zona, correo } = req.params
+  const fileStr = req.body.data;
 
   try {
+
+    const uploadResponse = await cloudinary.uploader.upload(fileStr, {
+      upload_preset: 'hospital_img',
+    });
+
     const user = await prisma.users.findUnique({
       where: {
         correo: correo
@@ -92,7 +97,8 @@ const InsertHospital = async (req, res) => {
         descripcion: descrip,
         zona: Number(zona),
         estado: 'espera',
-        user_id: user.user_id
+        user_id: user.user_id,
+        image_url: uploadResponse.secure_url
       }
     })
     res.status(200).send(true)

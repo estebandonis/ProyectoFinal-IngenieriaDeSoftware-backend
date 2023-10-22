@@ -16,13 +16,14 @@ model examenes {
 }
 
 model hospitales {
-  hospital_id Int    @id @default(autoincrement())
-  nombre      String @unique(map: "hospitalesNombre_uk") @db.VarChar(50)
-  direccion   String @db.VarChar(50)
-  descripcion String @db.VarChar(250)
+  hospital_id Int     @id @default(autoincrement())
+  nombre      String  @unique(map: "hospitalesNombre_uk") @db.VarChar(50)
+  direccion   String  @db.VarChar(50)
+  descripcion String  @db.VarChar(250)
   zona        Int
-  estado      String @db.VarChar(50)
+  estado      String  @db.VarChar(50)
   user_id     Int
+  image_url   String? @db.VarChar(250)
 }
 
 model requests {
